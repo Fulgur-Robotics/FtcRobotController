@@ -1,2 +1,0 @@
-# Optional: install on a computer, never on the Android Robot Controller.
-ultralytics>=8.3,<9
