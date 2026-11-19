@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
-@TeleOp(name = "Pour Theo")
+@TeleOp(name = "Téléopéré")
 class TeleOpOldCar : LinearOpMode() {
     lateinit var revRobot: RevRobot
     override fun runOpMode() {
@@ -12,17 +12,18 @@ class TeleOpOldCar : LinearOpMode() {
         waitForStart()
 
         while (opModeIsActive()) {
-            val gX = revRobot.gamepad.right_stick_x.toDouble()
-            val gY = revRobot.gamepad.left_stick_y.toDouble()
-            revRobot.motorLeft.power = gY + gX
-            revRobot.motorRight.power = gY - gX
+            revRobot.motorLeft.power = revRobot.leftStickY() + revRobot.rightStickX()
+            revRobot.motorRight.power = revRobot.leftStickY() - revRobot.rightStickX()
 
-            if (revRobot.gamepad.left_trigger_pressed) {
-                revRobot.ramasseur.power = 1.toDouble()
-            } else if (revRobot.gamepad.left_bumper) {
-                revRobot.ramasseur.power = (-1).toDouble()
+            if (revRobot.leftTrigger()) {
+                revRobot.startRamasseur()
+            } else if (revRobot.leftBumper()) {
+                revRobot.backRamasseur()
             } else {
-                revRobot.ramasseur.power = 0.toDouble()
+                revRobot.stopRamasseur()
+            }
+            if (revRobot.gamepad.y) {
+                revRobot.togglePusher()
             }
         }
     }
